@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.84.0">
+  <title>Starter Template · Bootstrap v5.0</title>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/jquery.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<style>
+  .default-body {
+    background-color: #333;
+    color: #FFF;
+  }
+
+
+  .resized-text {
+    font-size: 3rem;
+  }
+
+  .quote-author {
+    font-style: italic;
+    color: #333;
+  }
+
+  .responsive-img {
+    width: 50%;
+  }
+
+  .list-group {
+    list-style-type: none;
+    padding: 0px;
+  }
+
+  .list-group-item {
+    color: #fff;
+    background: none;
+    border: none;
+
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  .ingredient-list-class {
+    padding: 0px;
+  }
+</style>
+
+<body class="default-body">
+  <div class="container">
+    <div class="main-container">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col">
+            <h1 class="display-1 mt-5">
+              Quench
+              <small class="text-muted resized-text">Random Drink Generator</small>
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <figure>
+              <blockquote class="blockquote">
+                <p id="quote-text"></p>
+              </blockquote>
+            </figure>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="container">
+        <div class="row mt-5">
+          <div class="col">
+            <h3 class="display-3 text-center"><span id="drink-name"></span></h3>
+            <img src="" id="drink-image" class="responsive-img rounded mx-auto d-block shadow-lg" alt="Image Cocktail">
+          </div>
+          <div class="row text-center"><span class="display-5" id="ingredient-title">Ingredient List</span></div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col text-center ingredient-list-class">
+            <ul class="list-group">
+              <span id="measure-list"></span>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <div class="row"><span class="display-5">Instructions</span></div>
+            <div class="row"><span id="drink-instructions"></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+
+    arrayData = [];
+
+    $(document).ready(function () {
+      $.ajax({
+        type: "GET",
+        url: "https://www.thecocktaildb.com/api/json/v1/1/random.php",
+        success: function (drinkData) {
+          arrayData = drinkData.drinks[0];
+
+          if (arrayData.strAlcoholic != "Alcoholic") {
+            location.reload()
+          }
+
+          var measureData = [];
+          var ingredientData = [];
+
+          var ingredients = [
+            arrayData.strIngredient1,
+            arrayData.strIngredient2,
+            arrayData.strIngredient3,
+            arrayData.strIngredient4,
+            arrayData.strIngredient5,
+            arrayData.strIngredient6,
+            arrayData.strIngredient7,
+            arrayData.strIngredient8,
+            arrayData.strIngredient9,
+            arrayData.strIngredient10,
+            arrayData.strIngredient11,
+            arrayData.strIngredient12,
+            arrayData.strIngredient13,
+            arrayData.strIngredient14,
+            arrayData.strIngredient15
+          ];
+
+
+          var measures = [
+            arrayData.strMeasure1,
+            arrayData.strMeasure2,
+            arrayData.strMeasure3,
+            arrayData.strMeasure4,
+            arrayData.strMeasure5,
+            arrayData.strMeasure6,
+            arrayData.strMeasure7,
+            arrayData.strMeasure8,
+            arrayData.strMeasure9,
+            arrayData.strMeasure10,
+            arrayData.strMeasure11,
+            arrayData.strMeasure12,
+            arrayData.strMeasure13,
+            arrayData.strMeasure14,
+            arrayData.strMeasure15
+          ];
+
+          var quotes = [
+            "Responsible Drinking? Now that’s an oxymoron.",
+            "24 hours in a day, 24 beers in a case. Coincidence?",
+            "Not to get technical, but according to chemistry alcohol is a solution.",
+            "I’ve never been drunk, but often I’ve been over served.",
+            "Always buy a bigger bottle than you think you’ll need. Better to be safe than sober.",
+            "Everybody’s got to believe in something. I believe I’ll have another beer.",
+            "Alcohol may be man’s worst enemy, but the bible says love your enemy.",
+            "Of course size matters. No one wants a small glass of wine.",
+            "I cook with wine, sometimes I even add it to the food.",
+            "I drink wine because my doctor said I shouldn’t keep things bottled up.",
+            "I drink alcohol to drown my problems, unfortunately my problems are damn good swimmers.",
+            "A bottle of wine contains more philosophy that all the books in the world.",
+            "If I ever go missing, I want my picture on a wine bottle instead of a milk carton, this way my friends will know I am missing.",
+            "I have taken more out of alcohol than alcohol has taken out of me.",
+            "Drinking after work is fine, but if you really want to enjoy working then drink before work.",
+            "I only take a drink on two occasions – when I’m thirsty and when I’m not.",
+            "It takes only one drink to get me drunk. The trouble is, I can’t remember if it’s the thirteenth or the fourteenth.",
+            "Don’t cry over spilled milk…it could have been beer!",
+            "Beer doesn’t have many vitamins. That’s why you need to drink lots of it.",
+            "Home is where the wine is.",
+            "Nothing in life is absolute — only vodka",
+            "A party without alcohol is just a meeting",
+            "I said no to alcohol, but it just doesn’t listen",
+            "I drink because I work, I work so I can drink",
+            "Sometimes I drink water to surprise my liver.",
+            "Friday is the beginning of my liver’s work week.",
+            "They say follow your heart and it led me to alcohol",
+            "Beer is now cheaper than gas, do drink, don’t drive!",
+            "You can’t drink all day if you don’t start in the morning.",
+            "Alcohol is proof that God loves us and wants us to be happy.",
+            "Money can’t buy you happiness but it can buy you alcohol.",
+            "My boss didn’t know I drank, till one day I came to work sober.",
+            "Alcohol is the cause and the solution to many of life’s problems.",
+            "I drink to make other people more interesting.",
+            "Not to brag but I don’t even need alcohol to make really bad decisions.",
+            "Beer makes you feel the way you ought to feel without beer.",
+            "Oh, you hate your job? Why didn’t you say so? There’s a support group for that. It’s called EVERYBODY, and they meet at the bar.",
+            "There comes a time in every woman’s life when the only thing that helps is a glass of champagne.",
+            "There is no bad whiskey. There are only some whiskeys that aren’t as good as others.",
+            "Work is the curse of the drinking classes.",
+            "Too much of anything is bad, but too much Champagne is just right.",
+            "Men are like wine – some turn to vinegar, but the best improve with age.",
+            "I only drink Champagne on two occasions, when I am in love and when I am not.",
+            "Either give me more wine or leave me alone.",
+            "Age is just a number. It’s totally irrelevant unless, of course, you happen to be a bottle of wine.",
+            "Time is never wasted when you’re wasted all the time."
+          ];
+
+          
+          var x = Math.floor(Math.random() * 40);
+          var quote = document.getElementById('quote-text');
+          quote.innerText = '"' + quotes[x] + '"';
+
+          var imageSrc = document.getElementById('drink-image');
+          imageSrc.src = arrayData.strDrinkThumb;
+
+          var drinkName = document.getElementById('drink-name')
+          drinkName.innerText = arrayData.strDrink;
+
+          var drinkDirections = document.getElementById('drink-instructions');
+          drinkDirections.innerText = arrayData.strInstructions;
+
+          for (let i = 0; i < 15; ++i) {
+            measureData.push(measures[i])
+            ingredientData.push(ingredients[i])
+
+            if (measures[i] != null && ingredients[i] != null) {
+              var measureEntry = document.createElement('li');
+              measureEntry.innerHTML = ('<li class="list-group-item">' + measures[i] + "  " + ingredients[i] + '</li>');
+              document.getElementById('measure-list').appendChild(measureEntry)
+
+            } else {
+              if (measures[i] != null && ingredients[i] == null) {
+                var measureEntry = document.createElement('li');
+                measureEntry.innerHTML = ('<li class="list-group-item">' + measures[i] + '</li>');
+                document.getElementById('measure-list').appendChild(measureEntry)
+              } else {
+                if (measures[i] == null && ingredients[i] != null) {
+                  var measureEntry = document.createElement('li');
+                  measureEntry.innerHTML = ('<li class="list-group-item">' + ingredients[i] + '</li>');
+                  document.getElementById('measure-list').appendChild(measureEntry)
+
+                }
+              }
+            }
+          }
+
+        }
+
+      })
+
+    })
+
+
+
+
+  </script>
+</body>
+
+</html>
